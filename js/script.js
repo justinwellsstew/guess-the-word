@@ -20,6 +20,8 @@ const updateWordsInProgress = function(word){
 
 guessButton.addEventListener('click', function(e){
 e.preventDefault();
+let guessedLetterValue = textInputGuess.value;
+console.log(guessedLetterValue);
 updateWordsInProgress(word);
 })
 
