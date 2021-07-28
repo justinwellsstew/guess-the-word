@@ -49,17 +49,45 @@ const validateInput = function (input) {
     }
   };
   
-
 const makeGuess = function(letter){
     if (guessedLettersArray.includes(letter.toUpperCase())){
         guessMessage.innerHTML = `You have already guessed ${letter} silly`;
     }else{
         guessedLettersArray.push(letter.toUpperCase());
+        playerGuesses(guessedLettersArray);
+        updateWordInProgress(guessedLettersArray);
     }
-    console.log(guessedLettersArray);
 }
 
+const playerGuesses = function(guessedLettersArg){
+    guessedLetters.innerHTML = "";
+    guessedLetters.innerText = guessedLettersArg.join(" ");
+}
 
+const updateWordInProgress = function (guessedLetters) {
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    const revealWord = [];
+    for (const letter of wordArray) {
+      if (guessedLetters.includes(letter)) {
+        revealWord.push(letter.toUpperCase());
+      } else {
+        revealWord.push("●");
+      }
+    }
+    // console.log(revealWord);
+    let revealedWordJoined = revealWord.join("");
+    wordInProgress.innerText = revealedWordJoined;
+    testWin(revealedWordJoined);
+  };
+
+const testWin = function(revealWord){
+    if(revealWord == word.toUpperCase()){
+        console.log("you won");
+       guessMessage.innerHTML =  '<p class="highlight">You guessed correct the word! Congrats!</p>';
+       guessMessage.classList.add("win")
+    }
+}  
 
 
 
