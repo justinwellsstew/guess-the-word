@@ -13,14 +13,12 @@ const guessedLettersArray = [];
 
 guessButton.addEventListener('click', function(e){
     e.preventDefault();
-   
     let guessedLetterValue = textInputGuess.value;
     updateWordsInProgress(word);
     console.log(guessedLetterValue)
-   makeGuess(inputFunction(guessedLetterValue));
-   guessMessage.innerText = "";
+    const goodGuess = validateInput(guessedLetterValue);
+  if(goodGuess) {makeGuess(goodGuess)};
    textInputGuess.innerText="";
-    
 })
 
 // functions
@@ -32,21 +30,25 @@ const updateWordsInProgress = function(word){
         guessedWordArray.push("●");
     }
     wordInProgress.innerText = guessedWordArray.join("");
-
 }
 
-const inputFunction = function(input){
-    const acceptedLetter = /[a-zA-Z]/
-    if(input == ""){
-        guessMessage.innerHTML = "You must enter a value";
+const validateInput = function (input) {
+    const acceptedLetter = /[a-zA-Z]/;
+    if (input.length === 0) {
+      // Is the input empty?
+      guessMessage.innerText = "Please enter a letter.";
     } else if (input.length > 1) {
-        guessMessage.innerHTML = "you can only guess one letter at a time"
-    } else if (input.match(acceptedLetter)) {
-        return input;
-    }else {
-        guessMessage.innerHTML = "Please enter a valid letter"
+      // Did you type more than one letter?
+      guessMessage.innerText = "Please enter a single letter.";
+    } else if (!input.match(acceptedLetter)) {
+      // Did you type a number, a special character or some other non letter thing?
+      guessMessage.innerText = "Please enter a letter from A to Z.";
+    } else {
+      // We finally got a single letter, omg yay
+      return input;
     }
-}
+  };
+  
 
 const makeGuess = function(letter){
     if (guessedLettersArray.includes(letter.toUpperCase())){
