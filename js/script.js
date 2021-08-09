@@ -150,4 +150,5 @@ const startOver = function (){
   guessLetterButton.classList.add("hide");
   guessedLettersElement.classList.add("hide");
   wordInProgress.classList.add("hide");
+  playAgainButton.classList.remove("hide");
 }
